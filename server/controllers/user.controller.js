@@ -4,6 +4,8 @@ import verifyEmailTemplate from "../utils/VerifyEmail.js";
 import sendEmail from "../config/sendEmail.js";
 import genertedRefreshToken from "../utils/generaterefreshtoken.js";
 import generatedAccessToken from "../utils/generateAccesstoken.js";
+import { request, response } from "express";
+import uploadImageClodinary from "../utils/UploadImageCloud.js";
 
 // Creating Register Controller
 
@@ -200,3 +202,34 @@ export const logoutController = async (req, res) => {
     });
   }
 };
+
+// Upload Avtar Controller
+
+export async function uploadAvatar(request, response) {
+  try {
+    const userId = request.userId; // auth middlware
+    const image = request.file; // multer middleware
+
+    const upload = await uploadImageClodinary(image);
+
+    const updateUser = await UserModel.findByIdAndUpdate(userId, {
+      avatar: upload.url,
+    });
+
+    return response.json({
+      message: "upload profile",
+      success: true,
+      error: false,
+      data: {
+        _id: userId,
+        avatar: upload.url,
+      },
+    });
+  } catch (error) {
+    return response.status(500).json({
+      message: error.message || error,
+      error: true,
+      success: false,
+    });
+  }
+}

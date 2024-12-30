@@ -1,10 +1,16 @@
 import express from "express";
 import {
+  forgotPasswordController,
   loginController,
   logoutController,
+  refreshToken,
   RegisterUser,
+  resetpassword,
+  updateUser,
   uploadAvatar,
+  userDetails,
   verifyEmailController,
+  verifyForgotPasswordOtp,
 } from "../controllers/user.controller.js";
 import AuthMiddleware from "../middleware/auth.js";
 import upload from "../middleware/multer.js";
@@ -21,5 +27,10 @@ userRoute.put(
   upload.single("avatar"),
   uploadAvatar
 );
-
+userRoute.put("/updatedetails", AuthMiddleware, updateUser);
+userRoute.put("/forgotpassword", forgotPasswordController);
+userRoute.put("/verify-forgotpassword-otp", verifyForgotPasswordOtp);
+userRoute.put("/reset-password", resetpassword);
+userRoute.post("/refresh-token", refreshToken);
+userRoute.get("/user-details", AuthMiddleware, userDetails);
 export default userRoute;

@@ -9,7 +9,7 @@ function App() {
       <header className="bg-yellow-500  top-0 h-full py-3 shadow-md flex items-center">
         <Navbar />
       </header>
-      <main className="container-fluid mx-auto flex justify-center h-[624px]">
+      <main className="container-fluid mx-auto flex justify-center">
         <Outlet />
       </main>
       <footer>

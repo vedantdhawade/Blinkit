@@ -9,6 +9,10 @@ const SummaryApi = {
     url: "/api/user/login",
     method: "post",
   },
+  forgototp: {
+    url: "/api/user/forgotpassword",
+    method: "put",
+  },
 };
 
 export default SummaryApi;

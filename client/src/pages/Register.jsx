@@ -3,7 +3,7 @@ import toast from "react-hot-toast";
 import Axios from "../utils/Axios";
 import SummaryApi from "../common/SummaryApi";
 import AxiosErrorToast from "../utils/AxiosErrorToast";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 const Register = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -143,12 +143,12 @@ const Register = () => {
         {/* Already Registered */}
         <p className="text-sm text-center text-gray-600 mt-4">
           Already have an account?{" "}
-          <a
-            href="/login"
+          <Link
+            to={"/login"}
             className="text-yellow-600 hover:underline font-medium"
           >
             Login
-          </a>
+          </Link>
         </p>
       </div>
     </div>

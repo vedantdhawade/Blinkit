@@ -3,7 +3,7 @@ import SummaryApi from "../common/SummaryApi";
 import AxiosErrorToast from "../utils/AxiosErrorToast";
 import Axios from "../utils/Axios";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -96,12 +96,12 @@ const Login = () => {
         </form>
 
         <div className="mt-4 flex justify-between text-sm text-gray-600">
-          <a href="/register" className="hover:underline">
+          <Link to="/register" className="hover:underline">
             Create an account
-          </a>
-          <a href="/forgot-password" className="hover:underline">
+          </Link>
+          <Link to="/forgot-otp" className="hover:underline">
             Forgot password?
-          </a>
+          </Link>
         </div>
       </div>
     </div>

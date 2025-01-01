@@ -272,41 +272,58 @@ export async function forgotPasswordController(request, response) {
   try {
     const { email } = request.body;
 
-    const user = await UserModel.findOne({ email });
-
-    if (!user) {
+    // Validate input
+    if (!email) {
       return response.status(400).json({
-        message: "Email not available",
+        message: "Email is required",
         error: true,
         success: false,
       });
     }
 
-    const otp = generatedOtp();
-    const expireTime = new Date() + 60 * 60 * 1000; // 1hr
+    // Check if user exists
+    const user = await UserModel.findOne({ email });
 
-    const update = await UserModel.findByIdAndUpdate(user._id, {
+    if (!user) {
+      return response.status(404).json({
+        message: "Email not registered",
+        error: true,
+        success: false,
+      });
+    }
+
+    // Generate OTP and expiry time
+    const otp = generatedOtp(); // Ensure `generatedOtp()` is defined and working correctly
+    const expireTime = new Date(Date.now() + 60 * 60 * 1000); // 1 hour from now
+
+    // Update user record with OTP and expiry
+    await UserModel.findByIdAndUpdate(user._id, {
       forgot_password_otp: otp,
-      forgot_password_expiry: new Date(expireTime).toISOString(),
+      forgot_password_expiry: expireTime.toISOString(),
     });
 
+    // Send OTP email
     await sendEmail({
       sendto: email,
-      subject: "Forgot password from Binkeyit",
+      subject: "Forgot Password - Binkeyit",
       html: forgotPasswordTemplate({
         name: user.name,
-        otp: otp,
+        otp,
       }),
     });
 
-    return response.json({
-      message: "check your email",
+    // Respond success
+    return response.status(200).json({
+      message: "Check your email for the OTP",
       error: false,
       success: true,
     });
   } catch (error) {
+    // Log the error for debugging
+    console.error("Forgot Password Error:", error);
+
     return response.status(500).json({
-      message: error.message || error,
+      message: "An error occurred while processing your request",
       error: true,
       success: false,
     });

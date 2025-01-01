@@ -1,6 +1,14 @@
 import React, { useState } from "react";
+import toast from "react-hot-toast";
+import Axios from "../utils/Axios";
+import SummaryApi from "../common/SummaryApi";
+import AxiosErrorToast from "../utils/AxiosErrorToast";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const VerifyOTPPage = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
   const [otp, setOtp] = useState(new Array(6).fill("")); // Initialize state for OTP
 
   // Handle input change
@@ -30,11 +38,36 @@ const VerifyOTPPage = () => {
   };
 
   // Submit OTP
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const enteredOtp = otp.join("");
-    console.log("Submitted OTP:", enteredOtp);
     // Add API call or logic to verify OTP here
+    try {
+      const response = await Axios({
+        ...SummaryApi.verifyotp,
+        data: {
+          email: location.state.email,
+          otp: enteredOtp,
+        }, // Ensure the API expects this format
+      });
+
+      if (response?.data?.success) {
+        toast.success(response.data.message);
+        navigate("/reset-passwoord", {
+          state: {
+            email: location.state.email,
+            success: response.data.success,
+          },
+        });
+      } else {
+        toast.error(response.data.message || "Failed to send OTP.");
+      }
+    } catch (err) {
+      console.log(err);
+      AxiosErrorToast(err);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (

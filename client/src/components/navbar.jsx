@@ -16,7 +16,6 @@ const navbar = () => {
   const redirecttosearchpage = () => {
     navigate("/search");
   };
-  console.log(isSearch);
 
   return (
     <div className=" md:flex  items-center justify-between mx-2 container gap-5 ">

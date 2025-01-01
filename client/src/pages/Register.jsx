@@ -48,7 +48,7 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center w-[29rem] ">
+    <div className="min-h-screenflex items-center justify-center w-[24rem] ">
       <div className="bg-white shadow-lg rounded-lg p-8 w-[90%] max-w-[400px]">
         <h2 className="text-2xl font-bold text-yellow-500 text-center mb-6">
           Register to Blinkit

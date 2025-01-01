@@ -53,8 +53,11 @@ const navbar = () => {
           to="/register"
           className="flex items-center justify-center py-2 px-4 bg-yellow-300 text-black rounded-lg hover:bg-yellow-400 h-[40px] space-x-2"
         >
-          <TiShoppingCart size={20} />
-          <span>Cart</span>
+          <div className="animate-bounce">
+            <TiShoppingCart size={20} />
+          </div>
+
+          <span className="mr-">Cart</span>
         </Link>
       </div>
     </div>

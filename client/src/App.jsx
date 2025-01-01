@@ -1,18 +1,21 @@
 import { Outlet } from "react-router-dom";
 import Navbar from "./components/navbar";
 import Footer from "./components/Footer";
+import toast, { Toaster } from "react-hot-toast";
+
 function App() {
   return (
     <>
-      <header className="bg-yellow-500  top-0 h-full py-2 flex items-center">
+      <header className="bg-yellow-500  top-0 h-full py-3 shadow-md flex items-center">
         <Navbar />
       </header>
-      <main>
+      <main className="container-fluid mx-auto flex justify-center h-[624px]">
         <Outlet />
       </main>
       <footer>
         <Footer />
       </footer>
+      <Toaster />
     </>
   );
 }

@@ -2,11 +2,13 @@ import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import SearchBar from "./SearchBar";
 import { TiShoppingCart } from "react-icons/ti";
+import { useSelector } from "react-redux";
 
 const navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [isSearch, setisSearch] = useState(false);
+  const user = useSelector((state) => state.user);
 
   useEffect(() => {
     const issearch = location.pathname === "/search";

@@ -12,8 +12,18 @@ function App() {
   const token = localStorage.getItem("token");
 
   const getuser = async () => {
-    const userdata = await GetUserDetatils();
-    dispatch(setUser(userdata.data.data));
+    try {
+      if (!token) return; // Exit early if no token exists
+      const userdata = await GetUserDetatils();
+      if (userdata?.data?.data) {
+        dispatch(setUser(userdata.data.data));
+      } else {
+        throw new Error("User data is undefined");
+      }
+    } catch (error) {
+      console.error("Error fetching user details:", error);
+      toast.error("Failed to fetch user details. Please log in.");
+    }
   };
 
   useEffect(() => {

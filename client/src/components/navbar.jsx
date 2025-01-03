@@ -5,6 +5,7 @@ import { TiShoppingCart } from "react-icons/ti";
 import { useSelector } from "react-redux";
 import { MdArrowDropDown } from "react-icons/md";
 import { IoMdArrowDropup } from "react-icons/io";
+import { CgProfile } from "react-icons/cg";
 import UserDetails from "./UserDetails";
 
 const navbar = () => {
@@ -23,15 +24,27 @@ const navbar = () => {
     navigate("/search");
   };
 
+  const handlemobilemenu = () => {
+    console.log(user);
+    if (!user._id) {
+      navigate("/login");
+      return;
+    }
+    navigate("/mobileProfile");
+  };
+
   const handleclose = () => {
     setselectusermenu(false);
   };
   return (
     <div className=" md:flex  items-center justify-between mx-2 container gap-5 ">
-      <div className="flex-shrink-0 ml-2 ">
+      <div className="flex justify-between ml-2 ">
         <Link to="/" className="text-black font-bold text-2xl mb-2">
           Blinkit
         </Link>
+        <div className="md:hidden grid" onClick={handlemobilemenu}>
+          <CgProfile size={27} />
+        </div>
       </div>
       <div
         className=" md:flex w-full border h-full"

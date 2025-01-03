@@ -240,25 +240,52 @@ export async function uploadAvatar(request, response) {
 
 export const updateUser = async (req, res) => {
   try {
-    const userid = req.userId; //get it from auth middleware
+    const userid = req.userId; // Get it from auth middleware
     const { name, email, password, mobile } = req.body;
-    let hashpassword = "";
-    if (password) {
-      const salt = bcryptjs.genSalt(10);
-      hashpassword = await bcryptjs.hash(password, salt);
+
+    // Check if user exists
+    const user = await UserModel.findById(userid);
+    if (!user) {
+      return res.status(404).json({
+        error: true,
+        status: false,
+        message: "User not found",
+      });
     }
-    const User = await UserModel.findByIdAndUpdate(userid, {
-      ...(name && { name: name }),
-      ...(email && { email: email }),
+
+    // Initialize hashpassword variable
+    let hashpassword = "";
+
+    // If a new password is provided, hash it
+    if (password) {
+      const salt = await bcryptjs.genSalt(10); // Ensure you're awaiting this properly
+      hashpassword = await bcryptjs.hash(password, salt); // Pass the salt as the second argument
+    }
+
+    // Update user fields if provided
+    const updatedUserData = {
+      ...(name && { name }),
+      ...(email && { email }),
       ...(password && { password: hashpassword }),
-      ...(mobile && { mobile: mobile }),
-    });
+      ...(mobile && { mobile }),
+    };
+
+    // Update the user in the database
+    const updatedUser = await UserModel.findByIdAndUpdate(
+      userid,
+      updatedUserData,
+      { new: true }
+    );
+
+    // Return a success response
     res.status(200).json({
       error: false,
       status: true,
-      message: User,
+      message: "User details updated successfully",
+      data: updatedUser, // Send the updated user data if necessary
     });
   } catch (error) {
+    console.log(error);
     res.status(500).json({
       error: true,
       status: false,

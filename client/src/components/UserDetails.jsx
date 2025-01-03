@@ -7,12 +7,13 @@ import Axios from "../utils/Axios";
 import SummaryApi from "../common/SummaryApi";
 import { removeUserDetails } from "../store/userSlice";
 import toast from "react-hot-toast";
+import { FiExternalLink } from "react-icons/fi";
+import { CgProfile } from "react-icons/cg"; // Default profile icon
+
 const UserDetails = ({ close }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const user = useSelector((state) => {
-    return state.user;
-  });
+  const user = useSelector((state) => state.user);
 
   const handlelogout = async () => {
     try {
@@ -20,7 +21,10 @@ const UserDetails = ({ close }) => {
         ...SummaryApi.logout,
       });
       if (response.data.success) {
-        close();
+        if (close) {
+          close();
+        }
+
         dispatch(removeUserDetails());
         localStorage.removeItem("token");
         navigate("/login");
@@ -30,16 +34,51 @@ const UserDetails = ({ close }) => {
       AxiosErrorToast(error);
     }
   };
+
   return (
-    <div className="">
+    <div className="w-full">
+      {/* User Image Section */}
+      <div className="flex flex-col items-center p-4 border-b border-gray-200">
+        <div className="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center overflow-hidden shadow-md">
+          {user?.avatar ? (
+            <img
+              src={user.avatar}
+              alt="User Avatar"
+              className="w-full h-full object-cover"
+            />
+          ) : (
+            <CgProfile size={48} className="text-gray-400" />
+          )}
+        </div>
+        {/* User Name */}
+        <h3 className="mt-3 text-lg font-semibold text-gray-700">
+          {user?.name || "Guest User"}
+        </h3>
+        {/* User Phone or Email */}
+        <p className="text-sm text-gray-500">
+          {user?.phone || user?.email || "No Details Available"}
+        </p>
+      </div>
+
+      {/* Account Details */}
       <div className="font-semibold p-2">My Account</div>
-      <div className="p-2"> {user.name || user.phone} </div>
+      <div className="p-2 flex justify-between items-center">
+        {user.name || user.phone}
+        <div>
+          <Link to={"/dashboard/profile"}>
+            <FiExternalLink />
+          </Link>
+        </div>
+      </div>
+
       <Divider />
-      <div className="grid text-sm  p-1">
-        <Link to={""} className="p-2 hover:bg-yellow-300">
+
+      {/* Navigation Links */}
+      <div className="grid text-sm p-1">
+        <Link to={"/dashboard/orders"} className="p-2 hover:bg-yellow-300">
           Orders
         </Link>
-        <Link to={""} className="p-2 hover:bg-yellow-300">
+        <Link to={"/dashboard/address"} className="p-2 hover:bg-yellow-300">
           Save Address
         </Link>
         <button

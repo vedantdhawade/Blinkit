@@ -31,8 +31,21 @@ const userSlice = createSlice({
       state.role = action.payload.role;
       state.createdAt = action.payload.createdAt;
     },
+    removeUserDetails: (state, action) => {
+      state._id = "";
+      state.name = "";
+      state.email = "";
+      state.avatar = "";
+      state.mobile = "";
+      state.last_login_date = "";
+      state.address_details = [];
+      state.shopping_cart = [];
+      state.orderHistory = [];
+      state.role = "";
+      state.createdAt = "";
+    },
   },
 });
 
-export const { setUser } = userSlice.actions;
+export const { setUser, removeUserDetails } = userSlice.actions;
 export default userSlice.reducer;

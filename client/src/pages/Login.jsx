@@ -4,9 +4,13 @@ import AxiosErrorToast from "../utils/AxiosErrorToast";
 import Axios from "../utils/Axios";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import GetUserDetatils from "../utils/fetchuserdetails";
+import { setUser } from "../store/userSlice";
 
 const Login = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [FormData, setFormdata] = useState({
     email: "",
     password: "",
@@ -32,7 +36,9 @@ const Login = () => {
           email: "",
           password: "",
         });
-        navigate("/login");
+        const user = await GetUserDetatils();
+        dispatch(setUser(user.data.data));
+        navigate("/");
       }
     } catch (err) {
       console.log(err);

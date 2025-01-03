@@ -3,12 +3,16 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import SearchBar from "./SearchBar";
 import { TiShoppingCart } from "react-icons/ti";
 import { useSelector } from "react-redux";
+import { MdArrowDropDown } from "react-icons/md";
+import { IoMdArrowDropup } from "react-icons/io";
+import UserDetails from "./UserDetails";
 
 const navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [isSearch, setisSearch] = useState(false);
   const user = useSelector((state) => state.user);
+  const [selectusermenu, setselectusermenu] = useState(false);
 
   useEffect(() => {
     const issearch = location.pathname === "/search";
@@ -19,6 +23,9 @@ const navbar = () => {
     navigate("/search");
   };
 
+  const handleclose = () => {
+    setselectusermenu(false);
+  };
   return (
     <div className=" md:flex  items-center justify-between mx-2 container gap-5 ">
       <div className="flex-shrink-0 ml-2 ">
@@ -44,12 +51,36 @@ const navbar = () => {
         )}
       </div>
       <div className="hidden md:flex space-x-4">
-        <Link
-          to="/login"
-          className="px-4 py-2 bg-black text-yellow-500 rounded-lg hover:bg-gray-800"
-        >
-          Login
-        </Link>
+        {user.name ? (
+          <div className="px-4 py-2 relative w-full">
+            <div
+              className="flex items-center gap-2 select-none"
+              onClick={() => setselectusermenu((prev) => !prev)}
+            >
+              <p>Account</p>
+              {selectusermenu ? (
+                <IoMdArrowDropup size={20} />
+              ) : (
+                <MdArrowDropDown size={20} />
+              )}
+            </div>
+            {selectusermenu && (
+              <div className="absolute top-[53px]">
+                <div className="min-w-52 rounded-md bg-white lg:shadow-md">
+                  <UserDetails close={handleclose} />
+                </div>
+              </div>
+            )}
+          </div>
+        ) : (
+          <Link
+            to="/login"
+            className="px-4 py-2 bg-black text-yellow-500 rounded-lg hover:bg-gray-800"
+          >
+            Login
+          </Link>
+        )}
+
         <Link
           to="/register"
           className="flex items-center justify-center py-2 px-4 bg-yellow-300 text-black rounded-lg hover:bg-yellow-400 h-[40px] space-x-2"

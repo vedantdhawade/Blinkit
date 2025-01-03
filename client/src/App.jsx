@@ -9,6 +9,7 @@ import { useDispatch } from "react-redux";
 
 function App() {
   const dispatch = useDispatch();
+  const token = localStorage.getItem("token");
 
   const getuser = async () => {
     const userdata = await GetUserDetatils();
@@ -17,7 +18,7 @@ function App() {
 
   useEffect(() => {
     getuser();
-  }, []);
+  }, [token]);
 
   return (
     <>

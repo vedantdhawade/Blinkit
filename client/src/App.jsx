@@ -1,20 +1,27 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import Navbar from "./components/navbar";
 import Footer from "./components/Footer";
 import toast, { Toaster } from "react-hot-toast";
 import GetUserDetatils from "./utils/fetchuserdetails";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { setUser } from "./store/userSlice";
 import { useDispatch } from "react-redux";
 
 function App() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const token = localStorage.getItem("token");
+  const [loading, setLoading] = useState(true); // Add a loading state
 
   const getuser = async () => {
     try {
-      if (!token) return; // Exit early if no token exists
+      if (!token) {
+        navigate("/login"); // Redirect to login if no token exists
+        return;
+      }
+
       const userdata = await GetUserDetatils();
+
       if (userdata?.data?.data) {
         dispatch(setUser(userdata.data.data));
       } else {
@@ -23,6 +30,9 @@ function App() {
     } catch (error) {
       console.error("Error fetching user details:", error);
       toast.error("Failed to fetch user details. Please log in.");
+      navigate("/login"); // Redirect to login on error
+    } finally {
+      setLoading(false); // Stop loading once the fetch is complete
     }
   };
 
@@ -30,9 +40,18 @@ function App() {
     getuser();
   }, [token]);
 
+  if (loading) {
+    // Show a loading indicator while fetching user details
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <p>Loading...</p>
+      </div>
+    );
+  }
+
   return (
     <>
-      <header className="bg-yellow-500  top-0 h-full py-3 shadow-md flex items-center">
+      <header className="bg-yellow-500 top-0 h-full py-3 shadow-md flex items-center">
         <Navbar />
       </header>
       <main className="container-fluid mx-auto flex justify-center">

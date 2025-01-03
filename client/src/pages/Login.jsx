@@ -31,6 +31,8 @@ const Login = () => {
         toast.message(response.data.message);
       }
       if (response.data.success) {
+        const token = response.data.data.accessToken;
+        localStorage.setItem("token", token);
         toast.success(response.data.message);
         setFormdata({
           email: "",

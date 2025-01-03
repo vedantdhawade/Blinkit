@@ -75,6 +75,15 @@ const UserDetails = ({ close }) => {
 
       {/* Navigation Links */}
       <div className="grid text-sm p-1">
+        <Link to={"/dashboard/catogery"} className="p-2 hover:bg-yellow-300">
+          Catogery
+        </Link>
+        <Link to={"/dashboard/subcategory"} className="p-2 hover:bg-yellow-300">
+          Sub Category
+        </Link>
+        <Link to={"/dashboard/products"} className="p-2 hover:bg-yellow-300">
+          Products
+        </Link>
         <Link to={"/dashboard/orders"} className="p-2 hover:bg-yellow-300">
           Orders
         </Link>

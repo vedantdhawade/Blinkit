@@ -15,6 +15,7 @@ import Address from "../pages/Address.jsx";
 import Category from "../pages/Category.jsx";
 import SubCategory from "../pages/SubCategory.jsx";
 import ProductAdmin from "../pages/ProductAdmin.jsx";
+import CheckAdmin from "../layout/CheckAdmin.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -70,15 +71,27 @@ const router = createBrowserRouter([
           },
           {
             path: "catogery",
-            element: <Category />,
+            element: (
+              <CheckAdmin>
+                <Category />
+              </CheckAdmin>
+            ),
           },
           {
             path: "subcategory",
-            element: <SubCategory />,
+            element: (
+              <CheckAdmin>
+                <SubCategory />
+              </CheckAdmin>
+            ),
           },
           {
             path: "products",
-            element: <ProductAdmin />,
+            element: (
+              <CheckAdmin>
+                <ProductAdmin />
+              </CheckAdmin>
+            ),
           },
         ],
       },

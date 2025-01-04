@@ -5,12 +5,14 @@ import { toast } from "react-hot-toast";
 import Axios from "../utils/Axios.js";
 import SummaryApi from "../common/SummaryApi.js";
 
-const UploadCategory = ({ close }) => {
+const UpdateCategory = ({ close, _id }) => {
   const [formData, setFormData] = useState({
+    _id: _id,
     name: "",
     image: null,
   });
   const [loading, setloading] = useState(false);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -22,6 +24,8 @@ const UploadCategory = ({ close }) => {
   const handleimagechange = async (e) => {
     setloading(true);
     const image = e.target.files[0];
+    if (!image) return;
+
     const response = await uploadImage(image);
     if (response.data.success) {
       toast.success(response.data.message);
@@ -36,7 +40,7 @@ const UploadCategory = ({ close }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const response = await Axios({
-      ...SummaryApi.addCategory,
+      ...SummaryApi.updateCategory,
       data: formData,
     });
     if (response.data.success) {
@@ -54,7 +58,7 @@ const UploadCategory = ({ close }) => {
     <div className="fixed top-0 bottom-0 right-0 left-0 bg-neutral-700 opacity-90 flex justify-center items-center">
       <div className="bg-white w-autp p-5 flex-col">
         <div className="flex justify-between items-center">
-          <h1 className="font-semibold">Add Category </h1>
+          <h1 className="font-semibold">Update Category </h1>
           <div onClick={close}>
             <FaRegWindowClose size={20} />
           </div>
@@ -65,7 +69,7 @@ const UploadCategory = ({ close }) => {
             onSubmit={handleSubmit}
           >
             <h2 className="text-2xl font-bold text-center text-yellow-500 mb-6">
-              Add Category
+              Update Category
             </h2>
 
             {/* Category Name */}
@@ -121,4 +125,4 @@ const UploadCategory = ({ close }) => {
   );
 };
 
-export default UploadCategory;
+export default UpdateCategory;

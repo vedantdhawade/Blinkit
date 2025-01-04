@@ -9,6 +9,7 @@ import { removeUserDetails } from "../store/userSlice";
 import toast from "react-hot-toast";
 import { FiExternalLink } from "react-icons/fi";
 import { CgProfile } from "react-icons/cg"; // Default profile icon
+import isAdmin from "../utils/isAdmin";
 
 const UserDetails = ({ close }) => {
   const dispatch = useDispatch();
@@ -75,15 +76,29 @@ const UserDetails = ({ close }) => {
 
       {/* Navigation Links */}
       <div className="grid text-sm p-1">
-        <Link to={"/dashboard/catogery"} className="p-2 hover:bg-yellow-300">
-          Catogery
-        </Link>
-        <Link to={"/dashboard/subcategory"} className="p-2 hover:bg-yellow-300">
-          Sub Category
-        </Link>
-        <Link to={"/dashboard/products"} className="p-2 hover:bg-yellow-300">
-          Products
-        </Link>
+        {isAdmin(user.role) ? (
+          <div className="grid text-sm ">
+            <Link
+              to={"/dashboard/catogery"}
+              className="p-2 hover:bg-yellow-300"
+            >
+              Catogery
+            </Link>
+            <Link
+              to={"/dashboard/subcategory"}
+              className="p-2 hover:bg-yellow-300"
+            >
+              Sub Category
+            </Link>
+            <Link
+              to={"/dashboard/products"}
+              className="p-2 hover:bg-yellow-300"
+            >
+              Products
+            </Link>
+          </div>
+        ) : null}
+
         <Link to={"/dashboard/orders"} className="p-2 hover:bg-yellow-300">
           Orders
         </Link>

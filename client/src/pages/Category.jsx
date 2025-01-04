@@ -4,6 +4,7 @@ import toast from "react-hot-toast";
 import Axios from "../utils/Axios";
 import SummaryApi from "../common/SummaryApi";
 import CategoryCard from "../components/CategoryCard";
+import UpdateCategory from "../components/UpdateCategory";
 
 const Category = () => {
   const [addcategory, setaddcategory] = useState(false);
@@ -48,7 +49,12 @@ const Category = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-4">
           {Categories.map((curr, index) => {
             return (
-              <CategoryCard key={index} image={curr.image} title={curr.name} />
+              <CategoryCard
+                key={index}
+                image={curr.image}
+                title={curr.name}
+                _id={curr._id}
+              />
             );
           })}
         </div>

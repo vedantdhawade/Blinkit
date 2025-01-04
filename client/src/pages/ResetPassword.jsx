@@ -21,7 +21,6 @@ const ResetPasswordPage = () => {
 
     setIsLoading(true);
     try {
-      console.log(location.state.email, password, confirmPassword);
       const response = await Axios({
         ...SummaryApi.resetpassword,
         data: {

@@ -25,7 +25,6 @@ const navbar = () => {
   };
 
   const handlemobilemenu = () => {
-    console.log(user);
     if (!user._id) {
       navigate("/login");
       return;

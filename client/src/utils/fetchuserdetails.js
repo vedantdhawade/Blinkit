@@ -8,7 +8,7 @@ const GetUserDetatils = async () => {
     });
     return response;
   } catch (error) {
-    console.log("Login");
+    console.log(error);
   }
 };
 

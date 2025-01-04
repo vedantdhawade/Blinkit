@@ -3,7 +3,7 @@ import UploadCategory from "../components/UploadCategory";
 
 const Category = () => {
   const [addcategory, setaddcategory] = useState(false);
-  console.log(addcategory);
+
   return (
     <section>
       <div className="flex justify-between items-center p-2 shadow-md bg-slate-100">

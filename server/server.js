@@ -5,6 +5,8 @@ import connectDB from "./config/db.js";
 import userRoute from "./routers/User.route.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
+import categoryRoute from "./routers/Caregory.route.js";
+import uploadImage from "./routers/UploadImage.js";
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -21,6 +23,8 @@ app.use(cookieParser());
 
 // Routes
 app.use("/api/user", userRoute);
+app.use("/api/category", categoryRoute);
+app.use("/api/file", uploadImage);
 
 // Database Connection and Server Start
 connectDB()

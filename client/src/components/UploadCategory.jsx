@@ -1,5 +1,9 @@
 import React, { useState } from "react";
 import { FaRegWindowClose } from "react-icons/fa";
+import uploadImage from "../utils/uploadimage.js";
+import { toast } from "react-hot-toast";
+import Axios from "../utils/Axios.js";
+import SummaryApi from "../common/SummaryApi.js";
 
 const UploadCategory = ({ close }) => {
   const [formData, setFormData] = useState({
@@ -8,17 +12,39 @@ const UploadCategory = ({ close }) => {
   });
 
   const handleChange = (e) => {
-    const { name, value, files } = e.target;
+    const { name, value } = e.target;
     setFormData({
       ...formData,
-      [name]: files ? files[0] : value,
+      [name]: value,
     });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Form Data Submitted:", formData);
+  const handleimagechange = async (e) => {
+    const image = e.target.files[0];
+    const response = await uploadImage(image);
+    if (response.data.success) {
+      toast.success(response.data.message);
+      setFormData({
+        ...formData,
+        image: response.data.url,
+      });
+    }
+  };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const response = await Axios({
+      ...SummaryApi.addCategory,
+      data: formData,
+    });
+    if (response.data.success) {
+      toast.success(response.data.message);
+      setFormData({
+        name: "",
+        image: "",
+      });
+      close();
+    }
     // You can handle the form submission here, e.g., sending data to an API.
   };
 
@@ -56,7 +82,6 @@ const UploadCategory = ({ close }) => {
                 onChange={handleChange}
                 required
                 className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-yellow-400 focus:border-yellow-400"
-                placeholder="Enter category name"
               />
             </div>
 
@@ -72,7 +97,7 @@ const UploadCategory = ({ close }) => {
                 type="file"
                 id="image"
                 name="image"
-                onChange={handleChange}
+                onChange={handleimagechange}
                 accept="image/*"
                 required
                 className="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-yellow-100 file:text-yellow-700 hover:file:bg-yellow-200"

@@ -6,11 +6,11 @@ import Axios from "../utils/Axios.js";
 import SummaryApi from "../common/SummaryApi.js";
 import { useSelector } from "react-redux";
 
-const UploadSubCategory = ({ close, data }) => {
+const UploadSubCategory = ({ close }) => {
   const [formData, setFormData] = useState({
     name: "",
     image: null,
-    categoryIds: [], // Array to store multiple selected category IDs
+    category: [], // Array to store multiple selected category IDs
   });
   const [loading, setLoading] = useState(false);
   const [categoriess, setCategoriess] = useState([]);
@@ -55,14 +55,21 @@ const UploadSubCategory = ({ close, data }) => {
     const selectedIds = options.map((option) => option.value); // Extract their values (IDs)
     setFormData({
       ...formData,
-      categoryIds: selectedIds,
+      category: selectedIds,
     });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      console.log("formdata :", formData);
+      const response = await Axios({
+        ...SummaryApi.addSubcategory,
+        data: formData,
+      });
+      if (response.data.success) {
+        toast.success(response.data.message);
+        close();
+      }
     } catch (error) {
       toast.error(error.message || "Error submitting sub-category");
     }
@@ -126,16 +133,16 @@ const UploadSubCategory = ({ close, data }) => {
           {/* Multiple Category Selection */}
           <div className="mb-4">
             <label
-              htmlFor="categoryIds"
+              htmlFor="category"
               className="block text-sm font-medium text-gray-700"
             >
               Select Categories
             </label>
             <select
-              id="categoryIds"
-              name="categoryIds"
+              id="category"
+              name="category"
               multiple
-              value={formData.categoryIds}
+              value={formData.category}
               onChange={handleCategorySelection}
               required
               className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-yellow-400 focus:border-yellow-400"

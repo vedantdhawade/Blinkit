@@ -55,7 +55,7 @@ const UploadSubCategory = ({ close, data }) => {
     const selectedIds = options.map((option) => option.value); // Extract their values (IDs)
     setFormData({
       ...formData,
-      categoryIds: selectedIds, // Update categoryIds in formData
+      categoryIds: selectedIds,
     });
   };
 

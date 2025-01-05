@@ -7,12 +7,17 @@ import { createColumnHelper } from "@tanstack/react-table";
 import Table from "../components/Table";
 import { FaPencil } from "react-icons/fa6";
 import { MdDelete } from "react-icons/md";
+import UpdateSubCategory from "../components/UpdateSubCategory";
 
 const SubCategory = () => {
   const [addcategory, setaddcategory] = useState(false);
   const [loading, setloading] = useState(false);
   const [subcategories, setsubcategories] = useState([]);
   const columnHelper = createColumnHelper();
+  const [update, setupdate] = useState(false);
+  const [editdata, seteditdata] = useState({
+    _id: "",
+  });
 
   const columns = [
     columnHelper.accessor("name", {
@@ -44,10 +49,16 @@ const SubCategory = () => {
     }),
     columnHelper.accessor("_id", {
       header: "Action",
-      cell: (row) => {
+      cell: ({ row }) => {
         return (
           <div className="flex justify-center items-center gap-5 ">
-            <button className="bg-green-400 p-3 rounded-xl w-20 flex justify-center">
+            <button
+              className="bg-green-400 p-3 rounded-xl w-20 flex justify-center"
+              onClick={() => {
+                setupdate(true);
+                seteditdata(row.original);
+              }}
+            >
               <FaPencil size={20} />
             </button>
             <button className="bg-red-400 p-3 rounded-xl w-20 flex justify-center">
@@ -102,6 +113,9 @@ const SubCategory = () => {
           </div>
         )}
       </div>
+      {update && (
+        <UpdateSubCategory close={() => setupdate(false)} data={editdata} />
+      )}
     </section>
   );
 };

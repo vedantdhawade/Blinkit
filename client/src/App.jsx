@@ -5,13 +5,28 @@ import toast, { Toaster } from "react-hot-toast";
 import GetUserDetatils from "./utils/fetchuserdetails";
 import { useEffect, useState } from "react";
 import { setUser } from "./store/userSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import Axios from "./utils/Axios";
+import SummaryApi from "./common/SummaryApi";
+import { setAllCategories } from "./store/productSlice";
 
 function App() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const [loading, setLoading] = useState(true); // Add a loading state
+
+  const getCategories = async () => {
+    try {
+      const response = await Axios({
+        ...SummaryApi.getCategories,
+      });
+      const data = response.data.data;
+      dispatch(setAllCategories(data));
+    } catch (error) {
+      toast.error("error.message" || "Failed to fetch categories");
+    }
+  };
 
   const getuser = async () => {
     try {
@@ -38,6 +53,7 @@ function App() {
 
   useEffect(() => {
     getuser();
+    getCategories();
   }, [token]);
 
   if (loading) {

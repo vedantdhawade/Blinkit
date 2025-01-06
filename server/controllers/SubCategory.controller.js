@@ -58,3 +58,24 @@ export const GetSubCategory = async (req, res) => {
     });
   }
 };
+
+export const updateSubCategory = async (req, res) => {
+  const { name, image, category, _id } = req.body;
+  try {
+    const data = await SubCategoryModel.findByIdAndUpdate(
+      { _id },
+      {
+        name,
+        image,
+        category,
+      }
+    );
+    console.log(data);
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+      success: false,
+      error: true,
+    });
+  }
+};

@@ -15,9 +15,7 @@ const SubCategory = () => {
   const [subcategories, setsubcategories] = useState([]);
   const columnHelper = createColumnHelper();
   const [update, setupdate] = useState(false);
-  const [editdata, seteditdata] = useState({
-    _id: "",
-  });
+  const [editdata, seteditdata] = useState("");
 
   const columns = [
     columnHelper.accessor("name", {
@@ -56,7 +54,7 @@ const SubCategory = () => {
               className="bg-green-400 p-3 rounded-xl w-20 flex justify-center"
               onClick={() => {
                 setupdate(true);
-                seteditdata(row.original);
+                seteditdata(row.original._id);
               }}
             >
               <FaPencil size={20} />

@@ -6,7 +6,7 @@ import Axios from "../utils/Axios.js";
 import SummaryApi from "../common/SummaryApi.js";
 import { useSelector } from "react-redux";
 
-const UpdateSubCategory = ({ close, editdata }) => {
+const UpdateSubCategory = ({ close, data }) => {
   const [formData, setFormData] = useState({
     name: "",
     image: null,
@@ -62,14 +62,6 @@ const UpdateSubCategory = ({ close, editdata }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await Axios({
-        ...SummaryApi.addSubcategory,
-        data: formData,
-      });
-      if (response.data.success) {
-        toast.success(response.data.message);
-        close();
-      }
     } catch (error) {
       toast.error(error.message || "Error submitting sub-category");
     }
@@ -79,7 +71,7 @@ const UpdateSubCategory = ({ close, editdata }) => {
     <div className="fixed top-0 bottom-0 right-0 left-0 bg-neutral-700 opacity-90 flex justify-center items-center">
       <div className="bg-white w-auto p-5 flex-col rounded-lg shadow-lg">
         <div className="flex justify-between items-center mb-4">
-          <h1 className="font-semibold text-lg">Add Sub Category</h1>
+          <h1 className="font-semibold text-lg">Edit Sub Category</h1>
           <div onClick={close} className="cursor-pointer">
             <FaRegWindowClose size={20} />
           </div>
@@ -89,7 +81,7 @@ const UpdateSubCategory = ({ close, editdata }) => {
           onSubmit={handleSubmit}
         >
           <h2 className="text-2xl font-bold text-center text-yellow-500 mb-6">
-            Add Sub Category
+            Edit Sub Category
           </h2>
 
           {/* Sub-Category Name */}

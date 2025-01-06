@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 
 const UpdateSubCategory = ({ close, data }) => {
   const [formData, setFormData] = useState({
+    _id: "",
     name: "",
     image: null,
     category: [], // Array to store multiple selected category IDs
@@ -26,6 +27,7 @@ const UpdateSubCategory = ({ close, data }) => {
     setFormData({
       ...formData,
       [name]: value,
+      _id: data,
     });
   };
 
@@ -62,6 +64,17 @@ const UpdateSubCategory = ({ close, data }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      const response = await Axios({
+        ...SummaryApi.updateSubcategory,
+        data: formData,
+      });
+      if (response.data.success) {
+        toast.success(response.data.message);
+        close();
+      } else {
+        toast.error(response.data.message);
+        close();
+      }
     } catch (error) {
       toast.error(error.message || "Error submitting sub-category");
     }

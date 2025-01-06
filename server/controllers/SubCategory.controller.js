@@ -70,7 +70,44 @@ export const updateSubCategory = async (req, res) => {
         category,
       }
     );
-    console.log(data);
+    if (data) {
+      res.status(200).json({
+        message: "SubCategory Updated Successfully",
+        error: false,
+        success: true,
+      });
+    } else {
+      res.status(500).json({
+        message: "Error While Updating Data",
+        error: true,
+        success: false,
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+      success: false,
+      error: true,
+    });
+  }
+};
+
+export const DeleteSubCategory = async (req, res) => {
+  const { _id } = req.body;
+  try {
+    const data = await SubCategoryModel.findByIdAndDelete({ _id });
+    if (!data) {
+      res.status(500).json({
+        message: "No data Deleted",
+        error: true,
+        success: false,
+      });
+    }
+    res.status(200).json({
+      message: "Sub-Category Deleted Successfully",
+      error: false,
+      success: true,
+    });
   } catch (error) {
     res.status(500).json({
       message: error.message,

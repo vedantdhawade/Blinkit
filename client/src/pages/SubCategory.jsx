@@ -17,57 +17,76 @@ const SubCategory = () => {
   const [update, setupdate] = useState(false);
   const [editdata, seteditdata] = useState("");
 
+  // Function to handle subcategory deletion
+  const handleDelete = async (subcategoryId) => {
+    try {
+      const response = await Axios({
+        ...SummaryApi.deleteSubcategory,
+        data: { _id: subcategoryId }, // Pass the subcategory ID directly
+      });
+      if (response.data.success) {
+        toast.success(response.data.message);
+        // Refresh the subcategories after successful deletion
+        getSubcategories();
+      } else {
+        toast.error(response.data.message);
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to delete the subcategory");
+    }
+  };
+
+  // Define columns for the table
   const columns = [
     columnHelper.accessor("name", {
       header: "Name",
     }),
     columnHelper.accessor("image", {
       header: "Image",
-      cell: ({ row }) => {
-        return (
-          <img
-            src={row.original.image}
-            alt={row.original.name}
-            className="w-20 , h-20"
-          />
-        );
-      },
+      cell: ({ row }) => (
+        <img
+          src={row.original.image || "default-image-path.jpg"}
+          alt={row.original.name || "Subcategory"}
+          className="w-20 h-20"
+        />
+      ),
     }),
     columnHelper.accessor("category", {
       header: "Category",
-      cell: ({ row }) => {
-        return (
-          <>
-            {row.original.category.map((curr) => {
-              return <p key={curr._id}>{curr.name}</p>;
-            })}
-          </>
-        );
-      },
+      cell: ({ row }) => (
+        <>
+          {row.original.category.map((curr) => (
+            <p key={curr._id}>{curr.name}</p>
+          ))}
+        </>
+      ),
     }),
     columnHelper.accessor("_id", {
       header: "Action",
-      cell: ({ row }) => {
-        return (
-          <div className="flex justify-center items-center gap-5 ">
-            <button
-              className="bg-green-400 p-3 rounded-xl w-20 flex justify-center"
-              onClick={() => {
-                setupdate(true);
-                seteditdata(row.original._id);
-              }}
-            >
-              <FaPencil size={20} />
-            </button>
-            <button className="bg-red-400 p-3 rounded-xl w-20 flex justify-center">
-              <MdDelete size={20} />
-            </button>
-          </div>
-        );
-      },
+      cell: ({ row }) => (
+        <div className="flex justify-center items-center gap-5">
+          <button
+            className="bg-green-400 p-3 rounded-xl w-20 flex justify-center"
+            onClick={() => {
+              setupdate(true);
+              seteditdata(row.original._id);
+            }}
+          >
+            <FaPencil size={20} />
+          </button>
+          <button
+            className="bg-red-400 p-3 rounded-xl w-20 flex justify-center"
+            onClick={() => handleDelete(row.original._id)}
+          >
+            <MdDelete size={20} />
+          </button>
+        </div>
+      ),
     }),
   ];
 
+  // Fetch subcategories from the API
   const getSubcategories = async () => {
     try {
       setloading(true);
@@ -76,11 +95,12 @@ const SubCategory = () => {
       });
       if (response.data.success) {
         setsubcategories(response.data.data);
-
-        setloading(false);
+      } else {
+        toast.error("Failed to fetch subcategories");
       }
     } catch (error) {
-      toast.error("Not Able to Fetch Sub-Categories");
+      console.error(error);
+      toast.error("Unable to fetch subcategories");
     } finally {
       setloading(false);
     }
@@ -104,11 +124,13 @@ const SubCategory = () => {
       {addcategory && <UploadSubCategory close={() => setaddcategory(false)} />}
       <div>
         {loading ? (
-          <h1>Loading</h1>
+          <h1 className="text-center text-gray-500">Loading...</h1>
+        ) : subcategories.length === 0 ? (
+          <h1 className="text-center text-gray-500">
+            No subcategories available
+          </h1>
         ) : (
-          <div>
-            <Table data={subcategories} columns={columns} />
-          </div>
+          <Table data={subcategories} columns={columns} />
         )}
       </div>
       {update && (

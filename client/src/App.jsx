@@ -8,13 +8,25 @@ import { setUser } from "./store/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Axios from "./utils/Axios";
 import SummaryApi from "./common/SummaryApi";
-import { setAllCategories } from "./store/productSlice";
+import { setAllCategories, setSubCategories } from "./store/productSlice";
 
 function App() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const [loading, setLoading] = useState(true); // Add a loading state
+
+  const getSubCategories = async () => {
+    try {
+      const response = await Axios({
+        ...SummaryApi.getSubCategory,
+      });
+      const data = response.data.data;
+      dispatch(setSubCategories(data));
+    } catch (error) {
+      toast.error("error.message" || "Failed to fetch categories");
+    }
+  };
 
   const getCategories = async () => {
     try {
@@ -54,6 +66,7 @@ function App() {
   useEffect(() => {
     getuser();
     getCategories();
+    getSubCategories();
   }, [token]);
 
   if (loading) {

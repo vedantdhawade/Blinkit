@@ -8,6 +8,7 @@ import cors from "cors";
 import categoryRoute from "./routers/Caregory.route.js";
 import uploadImage from "./routers/UploadImage.js";
 import subcategoryroute from "./routers/Subcategory.route.js";
+import productRoute from "./routers/Product.route.js";
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -27,6 +28,7 @@ app.use("/api/user", userRoute);
 app.use("/api/category", categoryRoute);
 app.use("/api/file", uploadImage);
 app.use("/api/subcategory", subcategoryroute);
+app.use("/api/product", productRoute);
 
 // Database Connection and Server Start
 connectDB()

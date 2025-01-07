@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import uploadImage from "../utils/uploadimage";
 import toast from "react-hot-toast";
+import Axios from "../utils/Axios";
+import SummaryApi from "../common/SummaryApi";
 
 const ProductAdmin = () => {
   const [data, setdata] = useState({
@@ -21,7 +23,28 @@ const ProductAdmin = () => {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setdata((prev) => ({ ...prev, [name]: value }));
-    console.log(data);
+  };
+
+  const handleSubmit = async () => {
+    const response = await Axios({
+      ...SummaryApi.uploadProduct,
+      data: data,
+    });
+    console.log(response);
+    if (response.data.success) {
+      toast.success(response.data.message);
+      setdata({
+        name: "",
+        description: "",
+        image: [],
+        category: [],
+        subCategory: [],
+        unit: "",
+        stock: 0,
+        price: 0,
+        discount: 0,
+      });
+    }
   };
 
   const handleimagechange = async (e) => {
@@ -55,7 +78,13 @@ const ProductAdmin = () => {
 
       {/* Form Section */}
       <div className="bg-white mt-6 p-6 rounded-md shadow-md">
-        <form className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <form
+          className="grid grid-cols-1 md:grid-cols-2 gap-4"
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleSubmit();
+          }}
+        >
           {/* Product Name */}
           <div>
             <label htmlFor="name" className="block text-gray-600 font-medium">
@@ -273,10 +302,6 @@ const ProductAdmin = () => {
             <button
               type="submit"
               className="bg-yellow-400 px-4 py-2 rounded-md text-white font-medium hover:bg-yellow-500 transition duration-200"
-              onClick={(e) => {
-                e.preventDefault();
-                console.log(data);
-              }}
             >
               Submit
             </button>

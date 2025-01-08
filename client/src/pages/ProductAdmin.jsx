@@ -30,7 +30,7 @@ const ProductAdmin = () => {
       ...SummaryApi.uploadProduct,
       data: data,
     });
-    console.log(response);
+
     if (response.data.success) {
       toast.success(response.data.message);
       setdata({

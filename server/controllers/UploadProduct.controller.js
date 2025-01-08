@@ -67,7 +67,10 @@ export const GetProducts = async (req, res) => {
     const skip = (page - 1) * limit;
 
     const [data, totalcount] = await Promise.all([
-      ProductModel.find().sort({ createdAt: -1 }).skip(),
+      ProductModel.find(query) // Ensure to pass the query here
+        .sort({ createdAt: -1 })
+        .skip(skip) // Use skip for pagination
+        .limit(limit), // Use limit to fetch the correct number of items
       ProductModel.countDocuments(query),
     ]);
 
@@ -81,7 +84,7 @@ export const GetProducts = async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({
-      message: "Error in Geting Products",
+      message: error,
       error: true,
       success: false,
     });

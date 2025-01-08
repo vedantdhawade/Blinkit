@@ -45,3 +45,45 @@ export const UploadProduct = async (req, res) => {
     });
   }
 };
+
+export const GetProducts = async (req, res) => {
+  try {
+    let { page, limit, search } = req.body;
+
+    if (!page) {
+      page = 1;
+    }
+    if (!limit) {
+      limit = 10;
+    }
+
+    const query = search
+      ? {
+          $text: {
+            $search: search,
+          },
+        }
+      : {};
+    const skip = (page - 1) * limit;
+
+    const [data, totalcount] = await Promise.all([
+      ProductModel.find().sort({ createdAt: -1 }).skip(),
+      ProductModel.countDocuments(query),
+    ]);
+
+    return res.json({
+      message: "Products Data",
+      error: false,
+      success: true,
+      totalCount: totalcount,
+      totalpages: Math.ceil(totalcount / limit),
+      data: data,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Error in Geting Products",
+      error: true,
+      success: false,
+    });
+  }
+};

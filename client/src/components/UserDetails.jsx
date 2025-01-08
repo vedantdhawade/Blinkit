@@ -37,7 +37,7 @@ const UserDetails = ({ close }) => {
   };
 
   return (
-    <div className="w-full">
+    <div className="w-full border-r-4 border-gray-300">
       {/* User Image Section */}
       <div className="flex flex-col items-center p-4 border-b border-gray-200">
         <div className="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center overflow-hidden shadow-md">
@@ -89,6 +89,12 @@ const UserDetails = ({ close }) => {
               className="p-2 hover:bg-yellow-300"
             >
               Sub Category
+            </Link>
+            <Link
+              to={"/dashboard/addproducts"}
+              className="p-2 hover:bg-yellow-300"
+            >
+              Add Products
             </Link>
             <Link
               to={"/dashboard/products"}

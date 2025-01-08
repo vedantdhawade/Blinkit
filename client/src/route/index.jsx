@@ -16,6 +16,8 @@ import Category from "../pages/Category.jsx";
 import SubCategory from "../pages/SubCategory.jsx";
 import ProductAdmin from "../pages/ProductAdmin.jsx";
 import CheckAdmin from "../layout/CheckAdmin.jsx";
+import Product from "../pages/Product.jsx";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -86,10 +88,18 @@ const router = createBrowserRouter([
             ),
           },
           {
-            path: "products",
+            path: "addproducts",
             element: (
               <CheckAdmin>
                 <ProductAdmin />
+              </CheckAdmin>
+            ),
+          },
+          {
+            path: "products",
+            element: (
+              <CheckAdmin>
+                <Product />
               </CheckAdmin>
             ),
           },

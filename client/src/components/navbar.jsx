@@ -37,7 +37,7 @@ const navbar = () => {
   };
   return (
     <div className=" md:flex  items-center justify-between mx-2 container gap-5 ">
-      <div className="flex justify-between ml-2 ">
+      <div className="flex justify-between items-center ml-2 ">
         <Link to="/" className="text-black font-bold text-2xl mb-2">
           Blinkit
         </Link>

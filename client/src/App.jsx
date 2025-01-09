@@ -8,7 +8,11 @@ import { setUser } from "./store/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Axios from "./utils/Axios";
 import SummaryApi from "./common/SummaryApi";
-import { setAllCategories, setSubCategories } from "./store/productSlice";
+import {
+  setAllCategories,
+  setisloading,
+  setSubCategories,
+} from "./store/productSlice";
 
 function App() {
   const dispatch = useDispatch();
@@ -30,6 +34,10 @@ function App() {
 
   const getCategories = async () => {
     try {
+      dispatch(setisloading(true));
+      if (!token) {
+        return;
+      }
       const response = await Axios({
         ...SummaryApi.getCategories,
       });
@@ -37,6 +45,8 @@ function App() {
       dispatch(setAllCategories(data));
     } catch (error) {
       toast.error("error.message" || "Failed to fetch categories");
+    } finally {
+      dispatch(setisloading(false));
     }
   };
 

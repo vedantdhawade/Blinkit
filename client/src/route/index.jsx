@@ -17,6 +17,7 @@ import SubCategory from "../pages/SubCategory.jsx";
 import ProductAdmin from "../pages/ProductAdmin.jsx";
 import CheckAdmin from "../layout/CheckAdmin.jsx";
 import Product from "../pages/Product.jsx";
+import ProductlistPage from "../pages/ProductlistPage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -102,6 +103,15 @@ const router = createBrowserRouter([
                 <Product />
               </CheckAdmin>
             ),
+          },
+        ],
+      },
+      {
+        path: ":category",
+        children: [
+          {
+            path: ":subCategory",
+            element: <ProductlistPage />,
           },
         ],
       },

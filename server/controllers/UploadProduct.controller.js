@@ -90,3 +90,26 @@ export const GetProducts = async (req, res) => {
     });
   }
 };
+
+export const getProductByCategory = async (req, res) => {
+  try {
+    const { categoryid } = req.body;
+
+    const ProductData = await ProductModel.find({
+      category: { $in: categoryid },
+    }).limit(10);
+
+    return res.json({
+      message: "Product By Categories",
+      error: false,
+      success: true,
+      data: ProductData,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: error.message || error,
+      error: true,
+      success: false,
+    });
+  }
+};

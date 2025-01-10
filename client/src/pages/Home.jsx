@@ -3,7 +3,8 @@ import mobilebanner from "../assets/banner-mobile.jpg";
 import banner from "../assets/banner.jpg";
 import { useSelector } from "react-redux";
 import { validateUrl } from "../utils/urlvalidator";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import CategoryCardCompo from "../components/CategoryCardCompo";
 const Home = () => {
   const allCategories = useSelector((state) => state.product.allCategories);
   const isLoading = useSelector((state) => state.product.isLoading);
@@ -25,7 +26,7 @@ const Home = () => {
   };
 
   return (
-    <section className="p-2">
+    <section className="p-4 mx-auto">
       {/* Banner display here */}
 
       <div className="w-screen">
@@ -50,6 +51,24 @@ const Home = () => {
               onClick={() => handleredirectcategory(c._id, c.name)}
             >
               <img src={c.image} alt={c.name} />
+            </div>
+          );
+        })}
+      </div>
+
+      {/* SubCAtegories display here */}
+
+      <div>
+        {allCategories.map((c, index) => {
+          return (
+            <div key={"categorylist" + index}>
+              <div className="flex justify-between px-4 py-2 bg-blue-200 rounded-md m-4">
+                <h1>{c?.name}</h1>
+                <Link>See More</Link>
+              </div>
+              <div>
+                <CategoryCardCompo id={c?._id} />
+              </div>
             </div>
           );
         })}

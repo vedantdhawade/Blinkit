@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Axios from "../utils/Axios";
 import SummaryApi from "../common/SummaryApi";
+import DisplayProductCard from "./DisplayProductCard";
 const CategoryCardCompo = ({ id }) => {
   const [loading, setloading] = useState(false);
   const [productData, setProductData] = useState([]);
@@ -23,11 +24,11 @@ const CategoryCardCompo = ({ id }) => {
   }, []);
   console.log(productData);
   return (
-    <div>
+    <>
       {productData.map((p, index) => {
-        return <div>{p.name}</div>;
+        return <DisplayProductCard data={p} />;
       })}
-    </div>
+    </>
   );
 };
 

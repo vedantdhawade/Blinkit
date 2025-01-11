@@ -26,7 +26,7 @@ const Home = () => {
   };
 
   return (
-    <section className="p-4 mx-auto">
+    <section className=" mx-auto">
       {/* Banner display here */}
 
       <div className="w-screen">
@@ -62,11 +62,11 @@ const Home = () => {
         {allCategories.map((c, index) => {
           return (
             <div key={"categorylist" + index}>
-              <div className="flex justify-between px-4 py-2 bg-blue-200 rounded-md m-4">
+              <div className="flex justify-between px-4 py-2 bg-yellow-400 rounded-md m-4">
                 <h1>{c?.name}</h1>
                 <Link>See More</Link>
               </div>
-              <div>
+              <div className="flex gap-2 mx-2">
                 <CategoryCardCompo id={c?._id} />
               </div>
             </div>

@@ -52,17 +52,13 @@ function App() {
 
   const getuser = async () => {
     try {
-      if (!token) {
-        navigate("/login"); // Redirect to login if no token exists
-        return;
-      }
-
-      const userdata = await GetUserDetatils();
-
-      if (userdata?.data?.data) {
-        dispatch(setUser(userdata.data.data));
-      } else {
-        throw new Error("User data is undefined");
+      if (token) {
+        const userdata = await GetUserDetatils();
+        if (userdata?.data?.data) {
+          dispatch(setUser(userdata.data.data));
+        } else {
+          throw new Error("User data is undefined");
+        }
       }
     } catch (error) {
       console.error("Error fetching user details:", error);

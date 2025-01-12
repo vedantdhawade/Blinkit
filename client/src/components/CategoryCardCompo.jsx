@@ -22,11 +22,11 @@ const CategoryCardCompo = ({ id }) => {
   useEffect(() => {
     fetchCategorydata();
   }, []);
-  console.log(productData);
+
   return (
     <>
       {productData.map((p, index) => {
-        return <DisplayProductCard data={p} />;
+        return <DisplayProductCard key={index + "Categorycard"} data={p} />;
       })}
     </>
   );

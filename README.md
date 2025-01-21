@@ -2,7 +2,7 @@
 
 A **fully functional BlinkIt Clone** built with modern web technologies to replicate the look, feel, and functionality of the popular grocery delivery platform. This project focuses on delivering an intuitive UI and robust features to enhance the user experience.
 
----
+ne Beginning
 
 ## 🌟 Features
 
@@ -18,15 +18,18 @@ A **fully functional BlinkIt Clone** built with modern web technologies to repli
 ## 🖥️ Tech Stack
 
 ### Frontend:
+
 - **React.js**: Component-based UI development.
 - **Tailwind CSS**: Quick and consistent styling.
 - **React Router**: Smooth navigation between pages.
 
 ### Backend:
+
 - **Node.js**: Server-side JavaScript runtime.
 - **Express.js**: Backend framework for APIs.
 
 ### Database:
+
 - **MongoDB**: NoSQL database for efficient data storage.
 
 ---
@@ -44,21 +47,25 @@ A **fully functional BlinkIt Clone** built with modern web technologies to repli
 ## 🚀 Installation
 
 1. Clone the repository:
+
    ```bash
    git clone https://github.com/your-username/blinkit-clone.git
    ```
 
 2. Navigate to the project folder:
+
    ```bash
    cd blinkit-clone
    ```
 
 3. Install dependencies:
+
    ```bash
    npm install
    ```
 
 4. Start the development server:
+
    ```bash
    npm run dev
    ```
@@ -90,15 +97,19 @@ BlinkIt-Clone/
 ## 📸 Screenshots
 
 ### Homepage:
+
 ![Homepage](https://via.placeholder.com/800x400)
 
 ### Product Page:
+
 ![Product Page](https://via.placeholder.com/800x400)
 
 ### Cart:
+
 ![Cart](https://via.placeholder.com/800x400)
 
 ### Admin Dashboard:
+
 ![Admin Dashboard](https://via.placeholder.com/800x400)
 
 ---
@@ -115,6 +126,7 @@ BlinkIt-Clone/
 ## 🤝 Contributing
 
 Contributions are welcome! Feel free to:
+
 - Fork the repo.
 - Create a new branch.
 - Submit a pull request.
@@ -134,4 +146,3 @@ For any inquiries or feedback, reach out to me at **your-email@example.com**.
 ---
 
 ### ⭐ Don’t forget to star the repository if you found it helpful!
-

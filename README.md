@@ -3,7 +3,7 @@
 A **fully functional BlinkIt Clone** built with modern web technologies to replicate the look, feel, and functionality of the popular grocery delivery platform. This project focuses on delivering an intuitive UI and robust features to enhance the user experience.
 
 ## 🌟 Features
-
+.
 - **User-Friendly UI**: Smooth navigation and a clean, modern design.
 - **Search Functionality**: Search for groceries and other products easily.
 - **Add to Cart**: Seamlessly add items to the cart with quantity management.
